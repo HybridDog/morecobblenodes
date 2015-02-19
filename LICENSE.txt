@@ -1,1 +1,2 @@
-WTFPL
+textures from default
+rest WTFPL
