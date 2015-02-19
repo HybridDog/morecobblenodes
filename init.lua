@@ -67,6 +67,85 @@ register_node("sand_and_dirt", {
 	no_stair = true
 })
 
+register_node("sand_and_dirt_grass", {
+	description = "Sand Dirt mixed with grass",
+	tiles = {
+		"morecobblenodes_grass.png",
+		"morecobblenodes_sand_and_dirt.png",
+		"morecobblenodes_sand_and_dirt.png^morecobblenodes_grass_side.png"
+	},
+	groups = {crumbly=3, soil=1, sand=1},
+	drop = "morecobblenodes:sand_and_dirt",
+	sounds = default.node_sound_dirt_defaults({
+		footstep = {name="default_grass_footstep", gain=0.25},
+	}),
+	no_stair = true
+})
+
+local function grass_allowed(pos)
+	local light = minetest.get_node_light(pos, 0.5)
+	if not light then
+		return 0
+	end
+	if light < 7 then
+		return false
+	end
+	local nd = minetest.get_node(pos).name
+	if nd == "air" then
+		return true
+	end
+	if nd == "ignore" then
+		return 0
+	end
+	local data = minetest.registered_nodes[nd]
+	local drawtype = data.drawtype
+	if drawtype
+	and drawtype ~= "normal"
+	and drawtype ~= "liquid"
+	and drawtype ~= "flowingliquid" then
+		return true
+	end
+	local light = data.light_source
+	if light
+	and light > 0 then
+		return true
+	end
+	return false
+end
+
+minetest.register_abm({
+	nodenames = {"morecobblenodes:sand_and_dirt"},
+	interval = 20,
+	chance = 9,
+	action = function(pos)
+		local allowed = grass_allowed({x=pos.x, y=pos.y+1, z=pos.z})
+		if allowed == 0 then
+			minetest.log("info", "[morecobblenodes] error replacing sand_and_dirt")
+			return
+		end
+		if allowed then
+			minetest.set_node(pos, {name="morecobblenodes:sand_and_dirt_grass"})
+			minetest.log("info", "[morecobblenodes] grass grew on sand_and_dirt")
+		end
+	end
+})
+
+minetest.register_abm({
+	nodenames = {"morecobblenodes:sand_and_dirt_grass"},
+	interval = 30,
+	chance = 9,
+	action = function(pos)
+		local allowed = grass_allowed({x=pos.x, y=pos.y+1, z=pos.z})
+		if allowed == 0 then
+			minetest.log("info", "[morecobblenodes] error replacing sand_and_dirt_grass")
+			return
+		end
+		if not allowed then
+			minetest.set_node(pos, {name="morecobblenodes:sand_and_dirt"})
+			minetest.log("info", "[morecobblenodes] grass disappeared on sand_and_dirt")
+		end
+	end
+})
 
 --recipes
 if rawget(_G, "technic")
@@ -81,4 +160,10 @@ and technic.register_separating_recipe then
 	end
 end
 
-minetest.log("info", string.format("[morecobblenodes] loaded after ca. %.2fs", os.clock() - load_time_start))
+local time = math.floor(tonumber(os.clock()-load_time_start)*100+0.5)/100
+local msg = "[morecobblenodes] loaded after ca. "..time
+if time > 0.05 then
+	print(msg)
+else
+	minetest.log("info", msg)
+end
