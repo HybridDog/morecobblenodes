@@ -5,8 +5,8 @@ local function add_stair(name, data)
 	stairs.register_stair_and_slab("morecobblenodes_"..name, "morecobblenodes:"..name,
 		data.groups,
 		data.tiles,
-		data.description.." Stair",
-		data.description.." Slab",
+		data.description.." stair",
+		data.description.." slab",
 		data.sounds
 	)
 end
@@ -21,7 +21,7 @@ local function register_node(name, data)
 	if moss_found then
 		data.tiles = data.moss
 		if data.tiles then
-			data.description = "Mossy "..data.description
+			data.description = "mossy "..data.description
 			local mossname = name.."_mossy"
 			if stair then
 				add_stair(mossname, table.copy(data))
@@ -36,7 +36,7 @@ local function register_node(name, data)
 end
 
 register_node("stones_big", {
-	description = "Big Stones",
+	description = "big stones",
 	tiles = {"morecobblenodes_stones_big.png"},
 	moss = {"morecobblenodes_stones_big_mossy.png"},
 	groups = {cracky=3, stone=1},
@@ -44,7 +44,7 @@ register_node("stones_big", {
 })
 
 register_node("stones_middle", {
-	description = "Stones",
+	description = "stones",
 	tiles = {"morecobblenodes_stones_middle.png"},
 	moss = {"morecobblenodes_stones_middle_mossy.png"},
 	groups = {cracky=3, stone=2},
@@ -52,7 +52,7 @@ register_node("stones_middle", {
 })
 
 register_node("stonebrick_middle", {
-	description = "Stone Brick",
+	description = "stone brick",
 	tiles = {"morecobblenodes_stone_brick_middle.png"},
 	moss = {"morecobblenodes_stone_brick_middle_mossy.png"},
 	groups = {cracky=3, stone=2},
@@ -60,7 +60,7 @@ register_node("stonebrick_middle", {
 })
 
 register_node("sand_and_dirt", {
-	description = "Sand Dirt mixed",
+	description = "sand dirt mixed",
 	tiles = {"morecobblenodes_sand_and_dirt.png"},
 	groups = {crumbly=3, soil=1, falling_node=1, sand=1},
 	sounds = default.node_sound_dirt_defaults(),
@@ -68,7 +68,7 @@ register_node("sand_and_dirt", {
 })
 
 register_node("sand_and_dirt_grass", {
-	description = "Sand Dirt mixed with grass",
+	description = "sand dirt mixed with grass",
 	tiles = {
 		"morecobblenodes_grass.png",
 		"morecobblenodes_sand_and_dirt.png",
