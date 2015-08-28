@@ -18,21 +18,23 @@ local function register_node(name, data)
 	if stair then
 		add_stair(name, table.copy(data))
 	end
-	if moss_found then
-		data.tiles = data.moss
-		if data.tiles then
-			data.description = "mossy "..data.description
-			local mossname = name.."_mossy"
-			if stair then
-				add_stair(mossname, table.copy(data))
-			end
-			minetest.register_node("morecobblenodes:"..mossname, data)
-			moss.register_moss({
-				node = name,
-				result = mossname
-			})
-		end
+	if not moss_found then
+		return
 	end
+	data.tiles = data.moss
+	if not data.tiles then
+		return
+	end
+	data.description = "mossy "..data.description
+	local mossname = name.."_mossy"
+	if stair then
+		add_stair(mossname, table.copy(data))
+	end
+	minetest.register_node("morecobblenodes:"..mossname, data)
+	moss.register_moss({
+		node = "morecobblenodes:"..name,
+		result = "morecobblenodes:"..mossname
+	})
 end
 
 register_node("stones_big", {
