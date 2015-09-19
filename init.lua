@@ -152,15 +152,22 @@ minetest.register_abm({
 --recipes
 if rawget(_G, "technic")
 and technic.register_separating_recipe then
-	local recipes = {
+	for _,i in pairs({
 		{"default:cobble 2", "morecobblenodes:stones_big", "default:gravel"},
 		{"default:gravel 2", "morecobblenodes:stones_middle", "morecobblenodes:sand_and_dirt"},
 		{"morecobblenodes:sand_and_dirt 2", "default:sand", "default:dirt"},
-	}
-	for _,i in pairs(recipes) do
+	}) do
 		technic.register_separating_recipe({input={i[1]}, output={i[2], i[3]}})
 	end
 end
+
+minetest.register_craft({
+	output = "morecobblenodes:stonebrick_middle 4",
+	recipe = {
+		{"morecobblenodes:stones_middle", "morecobblenodes:stones_middle"},
+		{"morecobblenodes:stones_middle", "morecobblenodes:stones_middle"},
+	}
+})
 
 local time = math.floor(tonumber(os.clock()-load_time_start)*100+0.5)/100
 local msg = "[morecobblenodes] loaded after ca. "..time
