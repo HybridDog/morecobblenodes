@@ -27,10 +27,10 @@ local function register_node(name, data)
 	end
 	data.description = "mossy "..data.description
 	local mossname = name.."_mossy"
+	minetest.register_node("morecobblenodes:"..mossname, table.copy(data))
 	if stair then
-		add_stair(mossname, table.copy(data))
+		add_stair(mossname, data)
 	end
-	minetest.register_node("morecobblenodes:"..mossname, data)
 	moss.register_moss({
 		node = "morecobblenodes:"..name,
 		result = "morecobblenodes:"..mossname
