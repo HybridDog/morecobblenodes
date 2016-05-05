@@ -1,6 +1,6 @@
 [Mod] morecobblenodes [morecobblenodes]
 
-The mod brings back the previous minetest dirt and cobble textures as stones with different sizes.
+The mod brings back the previous minetest dirt and cobble textures as stones with different sizes.  
 You can get them with the techinc centrifuge.
 
 **Depends:** see [depends.txt](https://raw.githubusercontent.com/HybridDog/morecobblenodes/master/depends.txt)  
